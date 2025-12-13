@@ -6,6 +6,8 @@ COPY package*.json .
 
 RUN npm ci --omit=dev
 
+RUN mkdir dist
+
 COPY dist dist
 
 EXPOSE 3000
