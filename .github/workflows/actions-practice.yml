@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         node: [16,18]
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -33,7 +33,7 @@ jobs:
             package*.json
   test:
     needs: build
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         node: [16,18]
@@ -55,7 +55,7 @@ jobs:
           npm run test
   docker_build_push:
     needs: [build,test]
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v5
         with:
@@ -72,5 +72,6 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
+          platforms: linux/arm64
           push: true
           tags: rameshmm/actions_practice_project:latest
