@@ -48,6 +48,8 @@ jobs:
       - uses: actions/download-artifact@v5
         with:
           name: artifacts-${{ matrix.node }}
+      - name: log ls
+        run: ls
       - name: test app
         run: |
           npm run test
