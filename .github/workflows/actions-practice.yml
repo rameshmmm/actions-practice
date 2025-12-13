@@ -27,7 +27,7 @@ jobs:
           npm run build
       - uses: actions/upload-artifact@v5
         with:
-          name: "artifacts-$matrix.node"
+          name: artifacts-${{ matrix.node }}
           path: |
             dist
             node_modules
@@ -47,7 +47,7 @@ jobs:
           node-version: ${{ matrix.node }}
       - uses: actions/download-artifact@v5
         with:
-          name: "artifacts-$matrix.node"
+          name: artifacts-${{ matrix.node }}
       - name: test app
         run: |
           npm run test
