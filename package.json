@@ -2,7 +2,7 @@
   "name": "node-ci-cd-app",
   "version": "1.0.0",
   "scripts": {
-    "start": "node dist/index.js",
+    "dev": "node dist/index.js",
     "build": "tsc",
     "test": "jest"
   },
