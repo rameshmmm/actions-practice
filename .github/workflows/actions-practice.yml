@@ -97,3 +97,4 @@ jobs:
           platforms: linux/arm64
           push: true
           tags: rameshmm/actions_practice_project:latest
+          context: .
