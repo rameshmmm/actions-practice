@@ -31,6 +31,7 @@ jobs:
           path: |
             dist
             package*.json
+            ${{ matrix.node == 18 && 'Dockerfile' || '' }}
   test:
     needs: build
     runs-on: ubuntu-latest
