@@ -1,0 +1,10 @@
+.*
+!.env*
+node_modules
+src
+tests
+Dockerfile
+jest.config.js
+tsconfig.json
+myDockerfile.txt
+README.md

@@ -24,26 +24,15 @@ jobs:
       - name: transpile
         run: |
           npm run build
-      
-      - name: Set artifact paths
-        id: paths
-        run: |
-          if [ "${{ matrix.node }}" = "18" ]; then
-            echo "files<<EOF
-          dist
-          package*.json
-          Dockerfile
-          EOF" >> $GITHUB_OUTPUT
-          else
-            echo "files<<EOF
-          dist
-          package*.json
-          EOF" >> $GITHUB_OUTPUT
-          fi
+
       - uses: actions/upload-artifact@v5
         with:
           name: artifacts-${{ matrix.node }}
-          path: ${{ steps.paths.outputs.files }}
+          path: |
+            dist
+            package*.json
+            Dockerfile
+
   test:
     needs: build
     runs-on: ubuntu-latest
@@ -71,7 +60,10 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v5
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Download Artifacts Node 18
+        uses: actions/download-artifact@v5
         with:
           name: "artifacts-18"
       - name: Login to Docker Hub
