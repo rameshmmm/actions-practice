@@ -56,9 +56,35 @@ jobs:
       - uses: actions/download-artifact@v5
         with:
           name: artifacts-${{ matrix.node }}
+      - name: lint codebase
+        run: |
+          npm run lint
       - name: test app
         run: |
           npm run test
+
+  quality-check:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: setup-node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 18
+          cache: 'npm'
+      - name: install deps
+        run: |
+          npm ci
+      - uses: actions/download-artifact@v5
+        with:
+          name: artifacts-18
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v7
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
   docker_build_push:
     needs: test
     runs-on: ubuntu-latest

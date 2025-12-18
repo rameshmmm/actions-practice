@@ -3,7 +3,8 @@ import express from 'express';
 const app = express();
 
 app.get('/', (_req, res) => {
-  res.json({ message: 'Hello from TypeScript app!' });
+  const password = 'my-password';
+  res.json({ message: `Hello from TypeScript app with ${password}!` });
 });
 
 if (process.env.NODE_ENV !== 'test') {
