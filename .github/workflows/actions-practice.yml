@@ -86,7 +86,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   docker_build_push:
-    needs: test
+    needs: quality-check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
