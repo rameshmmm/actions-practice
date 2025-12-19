@@ -121,6 +121,7 @@ jobs:
     steps:
       - name: Deploy to Development Server
         run: echo "Deploying to Development Server with ${{ vars.API_URL }} and ${{ vars.DB_NAME }}..."
+        
   deploy_prod:
     needs: docker_build_push
     if: github.ref_name == 'main'
@@ -128,4 +129,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to Production Server
-        run: echo "Deploying to Production Server with ${{ vars.API_URL }} and ${{ vars.DB_NAME }}..."
+        run: 
+          echo "Deploying to Production Server with ${{ vars.API_URL }} and ${{ vars.DB_NAME }}..."
+      # - name: Deploy with retry
+      #   run: |
+      #     MAX_ATTEMPTS=5
+      #     for i in $(seq 1 $MAX_ATTEMPTS); do
+      #       echo "Attempt $i"
+      #       aws ecs update-service --cluster my-cluster --service my-service \
+      #         --force-new-deployment && break
+      #       sleep 10
+      #     done
+
+
+  #       # This step will run only if the deploy step fails
+  # - name: Rollback on failure
+  #   if: failure() && steps.deploy_prod.conclusion == 'failure'
+  #   run: |
+  #     # Here you'd have your rollback commands, e.g., redeploy the previous stable image
+  #     # For example: aws ecs update-service --cluster your-cluster --service your-service --task-definition your-previous-task-def
